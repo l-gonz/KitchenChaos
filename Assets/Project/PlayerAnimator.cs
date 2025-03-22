@@ -4,12 +4,12 @@ public class PlayerAnimator : MonoBehaviour
 {
     private const string IS_WALKING_TRIGGER = "IsWalking";
 
-    [SerializeField] private Player player;
-
+    private Player player;
     private Animator animator;
 
     private void Awake()
     {
+        player = GetComponentInParent<Player>();
         animator = GetComponent<Animator>();
     }
 

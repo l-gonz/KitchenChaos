@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,7 +13,10 @@ public class Player : MonoBehaviour
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask interactLayer;
 
+    private IInteractable selectedInteractable;
+
     public bool IsWalking { get; private set; }
+    public static Action<IInteractable> OnSelectedInteractableChanged;
 
     private void Start()
     {
@@ -22,6 +26,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         MovePlayer();
+        FindInteractables();
     }
 
     private void MovePlayer()
@@ -50,13 +55,32 @@ public class Player : MonoBehaviour
             rotateSpeed * Time.deltaTime);
     }
 
-    private void Interact()
+    private void FindInteractables()
     {
         var faceDirection = transform.forward.normalized;
-        if (Physics.Raycast(transform.position, faceDirection, out var hit, 
-            INTERACT_DISTANCE, interactLayer))
+
+        if (Physics.Raycast(transform.position, faceDirection, out var hit, INTERACT_DISTANCE, interactLayer) 
+            && hit.transform.GetComponent<IInteractable>() is { } interactable)
         {
-            hit.transform.GetComponent<IInteractable>()?.Interact();
+            SetSelectedInteractable(interactable);
         }
+        else
+        {
+            SetSelectedInteractable(null);
+        }
+    }
+
+    private void SetSelectedInteractable(IInteractable interactable)
+    {
+        if (selectedInteractable == interactable) 
+            return;
+            
+        selectedInteractable = interactable;
+        OnSelectedInteractableChanged?.Invoke(selectedInteractable);
+    }
+
+    private void Interact()
+    {
+        selectedInteractable?.Interact();
     }
 }
