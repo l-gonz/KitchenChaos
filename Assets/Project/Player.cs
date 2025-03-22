@@ -14,10 +14,14 @@ public class Player : MonoBehaviour
 
     public bool IsWalking { get; private set; }
 
+    private void Start()
+    {
+        gameInput.OnInteractButtonPressed += Interact;
+    }
+
     private void Update()
     {
         MovePlayer();
-        Interact();
     }
 
     private void MovePlayer()
