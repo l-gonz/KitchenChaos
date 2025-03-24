@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 8247350577493882548}
   - component: {fileID: 1485403780308666470}
   m_Layer: 0
-  m_Name: KitchenCounterSelected
+  m_Name: SelectedVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4713502328136079304
 Transform:
   m_ObjectHideFlags: 0
@@ -133,7 +133,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedVisuals: {fileID: 1147729171672871192}
-  unselectedVisuals: {fileID: 8489276541531669327}
 --- !u!1 &8489276541531669327
 GameObject:
   m_ObjectHideFlags: 0
