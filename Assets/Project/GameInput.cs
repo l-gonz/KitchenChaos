@@ -8,8 +8,19 @@ public class GameInput : MonoBehaviour
 
     public Action OnInteractButtonPressed;
 
+    public static GameInput Instance { get; private set; }
+
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Debug.LogError("GameInput: Another instance of GameInput already exists!");
+            Destroy(this);
+            return;
+        }
+        
+        Instance = this;
+
         playerInputActions = new();
         playerInputActions.BaseMap.Enable();
         playerInputActions.BaseMap.Interact.performed += ctx => OnInteractButtonPressed?.Invoke();

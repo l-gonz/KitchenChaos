@@ -9,8 +9,6 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotateSpeed = 5f;
-
-    [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask interactLayer;
 
     private IInteractable selectedInteractable;
@@ -20,7 +18,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        gameInput.OnInteractButtonPressed += Interact;
+        GameInput.Instance.OnInteractButtonPressed += Interact;
     }
 
     private void Update()
@@ -31,7 +29,7 @@ public class Player : MonoBehaviour
 
     private void MovePlayer()
     {
-        var inputVector = gameInput.GetMoveInputVectorNormalized();
+        var inputVector = GameInput.Instance.GetMoveInputVectorNormalized();
         var moveDirection = new Vector3(inputVector.x, 0, inputVector.y);
         var moveDistance = moveSpeed * Time.deltaTime;
 
@@ -74,7 +72,7 @@ public class Player : MonoBehaviour
     {
         if (selectedInteractable == interactable) 
             return;
-            
+
         selectedInteractable = interactable;
         OnSelectedInteractableChanged?.Invoke(selectedInteractable);
     }
