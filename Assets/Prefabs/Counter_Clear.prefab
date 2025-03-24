@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2068644954009512621}
   m_Layer: 0
-  m_Name: SpawnPoint
+  m_Name: HoldObjectPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7512c1563cc6f0e46a50f4935ee695fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  holdPoint: {fileID: 2068644954009512621}
 --- !u!1001 &3161969437916353309
 PrefabInstance:
   m_ObjectHideFlags: 0

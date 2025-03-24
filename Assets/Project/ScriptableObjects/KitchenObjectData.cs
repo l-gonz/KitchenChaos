@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class KitchenObjectData : ScriptableObject
 {
-    public KitchenObject prefab;
-    public Sprite icon;
-    public string objectName;
+    public KitchenObject Prefab;
+    public Sprite Icon;
+    public string ObjectName;
 }

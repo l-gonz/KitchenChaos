@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IObjectHolder
 {
     private const float PLAYER_RADIUS = .7f;
     private const float PLAYER_HEIGHT = 2f;
@@ -10,15 +10,19 @@ public class Player : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotateSpeed = 5f;
     [SerializeField] private LayerMask interactLayer;
+    [SerializeField] private Transform holdPoint;
 
     private IInteractable selectedInteractable;
 
     public bool IsWalking { get; private set; }
+    public ObjectHold ObjectHold { get; private set; }
+
     public static Action<IInteractable> OnSelectedInteractableChanged;
 
     private void Start()
     {
-        GameInput.Instance.OnInteractButtonPressed += Interact;
+        GameInput.Instance.OnInteractButtonPressed += InteractSelected;
+        ObjectHold = new ObjectHold(holdPoint);
     }
 
     private void Update()
@@ -77,8 +81,8 @@ public class Player : MonoBehaviour
         OnSelectedInteractableChanged?.Invoke(selectedInteractable);
     }
 
-    private void Interact()
+    private void InteractSelected()
     {
-        selectedInteractable?.Interact();
+        selectedInteractable?.Interact(this);
     }
 }
