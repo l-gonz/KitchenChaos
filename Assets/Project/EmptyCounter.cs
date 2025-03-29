@@ -1,31 +1,22 @@
 using System;
 using UnityEngine;
 
-public class Counter : MonoBehaviour, IInteractable, IObjectHolder
+public class EmptyCounter : MonoBehaviour, IInteractable, IObjectHolder
 {
     [SerializeField] private Transform holdPoint;
 
     public ObjectHold ObjectHold { get; private set; }
-
-    /// TEST
-    [SerializeField] private KitchenObjectData kitchenObjectData; 
-    ////////
+    public Action OnInteract { get; set; }
 
     public void Start()
     {
         ObjectHold = new ObjectHold(holdPoint);
-
-        /// TEST
-        if (kitchenObjectData != null)
-        {
-            var test = Instantiate(kitchenObjectData.Prefab);
-            ObjectHold.HoldObject(test);
-        }
-        ////////
     }
 
     public void Interact(Player player)
     {
+        OnInteract?.Invoke();
+        
         if (!ObjectHold.IsHoldingObject && player.ObjectHold.IsHoldingObject)
         {
             ObjectHold.HoldObject(player.ObjectHold.ReleaseObject());

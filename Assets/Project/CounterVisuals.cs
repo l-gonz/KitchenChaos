@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class CounterVisuals : MonoBehaviour
 {
+    private const string INTERACT_TRIGGER = "OnInteract";
     private IInteractable parentInteractable;
 
     [SerializeField] private GameObject selectedVisuals;
+    [SerializeField] private Animator interactAnimator;
 
     private void Awake()
     {
@@ -18,12 +20,24 @@ public class CounterVisuals : MonoBehaviour
 
     private void Start()
     {
-        OnInteractableSelected(null);
-        Player.OnSelectedInteractableChanged += OnInteractableSelected;
+        OnParentInteractableSelected(null);
+        Player.OnSelectedInteractableChanged += OnParentInteractableSelected;
+        parentInteractable.OnInteract += OnParentInteracted;
     }
 
-    private void OnInteractableSelected(IInteractable interactable)
+    private void OnParentInteractableSelected(IInteractable interactable)
     {
-        selectedVisuals.SetActive(parentInteractable == interactable);
+        if (selectedVisuals != null)
+        {
+            selectedVisuals.SetActive(parentInteractable == interactable);
+        }
+    }
+
+    private void OnParentInteracted()
+    {
+        if (interactAnimator != null)
+        {
+            interactAnimator.SetTrigger(INTERACT_TRIGGER);
+        }
     }
 }
